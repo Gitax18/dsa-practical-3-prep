@@ -1,6 +1,6 @@
 #include "tree.h"
 #include <iostream>
-#include <queue>
+#include <stack>
 #include <vector>
 using namespace std;
 
@@ -28,6 +28,27 @@ void inorder(TreeNode *root) {
   }
 }
 
+vector<int> preorderiter(TreeNode *root) {
+  vector<int> res;
+  stack<TreeNode *> st;
+  st.push(root);
+  while (!st.empty()) {
+    auto curr = st.top();
+    res.push_back(curr->val);
+    st.pop();
+
+    if (curr->right != nullptr) {
+      st.push(curr->right);
+    }
+
+    if (curr->left != nullptr) {
+      st.push(curr->left);
+    }
+  }
+
+  return res;
+}
+
 int main() {
   vector<int> v{1, 2, 3, 4, 5, 6, -1, -1, -1, -1, -1, -1};
   TreeNode *root = buildTree(v);
@@ -38,8 +59,15 @@ int main() {
   cout << "Postorder: ";
   postorder(root);
   cout << endl;
+
+  // preorder traversal - iterative and recursive
   cout << "Preorder: ";
   preorder(root);
+  auto vpi = preorderiter(root);
+  cout << " | ";
+  for (auto i : vpi)
+    cout << i << " ";
   cout << endl;
+
   return 0;
 }
