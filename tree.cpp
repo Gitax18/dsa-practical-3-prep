@@ -14,14 +14,6 @@ public:
   TreeNode(int v, TreeNode *l, TreeNode *r) : val(v), left(l), right(r) {}
 };
 
-void preorder(TreeNode *root) {
-  if (root != nullptr) {
-    cout << root->val << " ";
-    preorder(root->left);
-    preorder(root->right);
-  }
-}
-
 TreeNode *buildTree(vector<int> v) {
   queue<TreeNode *> q;
   TreeNode *root = new TreeNode(v[0]);
@@ -50,7 +42,5 @@ TreeNode *buildTree(vector<int> v) {
 int main() {
   vector<int> v = {1, 2, 3, 4, 5, 6, -1, -1, -1, -1, -1, -1};
   auto root = buildTree(v);
-
-  preorder(root);
   return 0;
 }
