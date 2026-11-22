@@ -49,6 +49,23 @@ vector<int> preorderiter(TreeNode *root) {
   return res;
 }
 
+vector<int> postorderiter(TreeNode *root) {
+  vector<int> res;
+  stack<TreeNode *> st;
+  st.push(root);
+  while (!st.empty()) {
+    auto curr = st.top();
+    st.pop();
+    res.push_back(curr->val);
+    if (curr->left != nullptr)
+      st.push(curr->left);
+    if (curr->right != nullptr)
+      st.push(curr->right);
+  }
+  reverse(res.begin(), res.end());
+  return res;
+}
+
 int main() {
   vector<int> v{1, 2, 3, 4, 5, 6, -1, -1, -1, -1, -1, -1};
   TreeNode *root = buildTree(v);
@@ -56,8 +73,14 @@ int main() {
   cout << "Inorder: ";
   inorder(root);
   cout << endl;
+
+  // postorder traversal - iterative and recursive
   cout << "Postorder: ";
   postorder(root);
+  auto vpti = postorderiter(root);
+  cout << " | ";
+  for (auto i : vpti)
+    cout << i << " ";
   cout << endl;
 
   // preorder traversal - iterative and recursive
