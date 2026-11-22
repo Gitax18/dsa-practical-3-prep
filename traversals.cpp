@@ -66,12 +66,34 @@ vector<int> postorderiter(TreeNode *root) {
   return res;
 }
 
+vector<int> inorderiter(TreeNode *root) {
+  vector<int> res;
+  stack<TreeNode *> st;
+  TreeNode *curr = root;
+
+  while (curr || !st.empty()) {
+    while (curr) {
+      st.push(curr);
+      curr = curr->left;
+    }
+    curr = st.top();
+    res.push_back(curr->val);
+    st.pop();
+    curr = curr->right;
+  }
+  return res;
+}
+
 int main() {
   vector<int> v{1, 2, 3, 4, 5, 6, -1, -1, -1, -1, -1, -1};
   TreeNode *root = buildTree(v);
   cout << "*** Tree Traversal ***" << endl;
   cout << "Inorder: ";
   inorder(root);
+  auto viti = inorderiter(root);
+  cout << " | ";
+  for (auto i : viti)
+    cout << i << " ";
   cout << endl;
 
   // postorder traversal - iterative and recursive
