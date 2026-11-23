@@ -85,7 +85,7 @@ vector<int> inorderiter(TreeNode *root) {
 }
 
 int main() {
-  vector<int> v{1, 2, 3, 4, 5, 6, -1, -1, -1, -1, -1, -1};
+  vector<int> v{1, 2, 3, 4, 5, 6, 7, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1};
   TreeNode *root = buildTree(v);
   cout << "*** Tree Traversal ***" << endl;
   cout << "Inorder: ";
