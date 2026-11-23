@@ -85,6 +85,28 @@ TreeNode *constructFromPRE_IN(vector<int> preorder, vector<int> inorder,
   return root;
 }
 
+TreeNode *constructFromPOST_IN(vector<int> postorder, vector<int> inorder,
+                               int &postindex, int instart, int inend) {
+  if (instart > inend)
+    return nullptr;
+
+  TreeNode *root = new TreeNode(postorder[postindex]);
+  postindex--;
+
+  int rootpos = instart;
+  while (rootpos <= inend && inorder[rootpos] != root->val) {
+    rootpos++;
+  }
+
+  root->right =
+      constructFromPOST_IN(postorder, inorder, postindex, rootpos + 1, inend);
+
+  root->left =
+      constructFromPOST_IN(postorder, inorder, postindex, instart, rootpos - 1);
+
+  return root;
+}
+
 int main() {
   vector<int> v{1, 2, 3, 4, 5, 6, 7, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1};
   TreeNode *root = buildTree(v);
@@ -110,5 +132,20 @@ int main() {
   }
   cout << endl;
 
+  int postindex = postorder.size() - 1;
+  TreeNode *root3 = constructFromPOST_IN(postorder, inorder, postindex, 0,
+                                         inorder.size() - 1);
+  auto inorder3 = inorderiter(root3);
+  auto postorder2 = preorderiter(root3);
+
+  for (int k : inorder3) {
+    cout << k << " ";
+  }
+  cout << endl;
+
+  for (int k : postorder2) {
+    cout << k << " ";
+  }
+  cout << endl;
   return 0;
 }
